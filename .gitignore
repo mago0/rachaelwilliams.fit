@@ -1,0 +1,9 @@
+
+# Devenv
+.env
+.devenv*
+.direnv
+devenv.local.nix
+.DS_Store
+node_modules
+**/.terraform

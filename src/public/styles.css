@@ -1,0 +1,94 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  line-height: 1.6;
+  background-color: #f7f7f7;
+}
+
+.navbar {
+  background-color: #4f2454;
+  padding: 1rem;
+}
+
+.navbar-logo {
+  height: 5vh; 
+}
+
+.navbar-title {
+  font-family: 'Roboto', sans-serif;
+  font-stretch: ultra-condensed;
+  font-weight: 500;
+  color: #d1d1d1;
+}
+
+.footer {
+  background-color: #4f2454;
+  padding: 1rem;
+}
+
+.btn-start {
+    border: 3px solid #4f2454;
+}
+
+.hero {
+  background-image: url('images/hero.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 45vh;
+}
+
+.service {
+  text-align: center; /* Center the text in the service div */
+}
+
+.services {
+  padding: 2rem 0;
+}
+
+.service-image {
+  display: block;
+  width: 250px;
+  height: auto;
+  margin: 0 auto; /* center the image */
+  border-top-right-radius: 20px;
+}
+
+.testimonials {
+  padding: 2rem 0;
+}
+
+.testimonial {
+  margin: 0 auto 2rem;
+  width: 80%;
+}
+
+.testimonial span {
+  display: block;
+  font-style: italic;
+  text-align: right;
+}
+
+.about {
+  padding: 2rem 0;
+}
+
+@media (max-width: 768px) {
+  .service-paragraph {
+    width: 90%; /* reduce the width of the service div for mobile screens */
+    margin: 0 auto; /* center the service div on mobile */
+    padding-bottom: 10%;
+  }
+  .service-image {
+    width: 90%; /* reduce the width of the image for mobile screens */
+    margin: 0 auto; /* center the image on mobile */
+  }
+  .testimonial {
+    margin: 0 auto 2rem;
+    width: 90%;
+  }
+}
