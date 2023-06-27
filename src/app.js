@@ -16,7 +16,6 @@ if (!stripeSecretKey) {
 }
 
 console.log(`Environment: ${environment}`)
-console.log(`Secret Key ID: ${stripeSecretKey}`)
 
 // Create an Express app
 const app = express()
