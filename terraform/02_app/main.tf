@@ -163,6 +163,14 @@ resource "aws_iam_policy" "custom_execution_role_policy" {
         ]
         Effect   = "Allow"
         Resource = aws_cloudwatch_log_group.this.arn
+      },
+      {
+        Effect = "Allow",
+        Action = [
+          "ses:SendEmail",
+          "ses:SendRawEmail"
+        ]
+        Resource = data.terraform_remote_state.base.outputs.ses_identity_arn
       }
     ]
   })

@@ -2,10 +2,12 @@ const express = require('express')
 const dotenv = require('dotenv')
 const path = require('path')
 const config = require('./config')
+const AWS = require('aws-sdk')
 
 dotenv.config()
 const environment = process.env.NODE_ENV || 'dev'
 const port = process.env.PORT || config.listenPort
+const region = process.env.REGION || config.region
 const stripePricingTableID = process.env.STRIPE_PRICING_TABLE_ID || config.stripePricingTableID
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || config.stripePublishableKey
 const stripeSecretKey = process.env.STRIPE_SECRET_KEY
@@ -25,6 +27,48 @@ app.set('views', path.join(__dirname, 'views'))
 
 // Serve static assets from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')))
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+const ses = new AWS.SES({ region })
+
+// POSTs
+app.post('/contact', (req, res) => {
+  const data = req.body
+
+  const contents = `${data.message}\n\n${data.name}\n${data.email}\n`
+
+  var params = {
+      Destination: {
+          ToAddresses: ['rachael+contact@rachaelwilliams.fit'],
+      },
+      Message: {
+          Body: {
+              Text: { Data: contents },
+          },
+          Subject: { Data: `Contact Form Submission: ${data.name}` },
+      },
+      Source: 'noreply@rachaelwilliams.fit',
+  }
+
+  // if (process.env.NODE_ENV === 'dev') {
+  //   // In development, just log the email content that would be sent
+  //   console.log(params)
+  //   res.status(200).send('OK')
+  // } else {
+    ses.sendEmail(params, function(err, data) {
+        if (err) {
+            console.log(err, err.stack)
+            res.status(500).send('Something went wrong')
+        } else {
+            console.log(data)
+            res.status(200).send('OK')
+        }
+    })
+  // }
+})
+
 
 app.get("/healthz", (req, res) => {
   res.status(200).send("OK")

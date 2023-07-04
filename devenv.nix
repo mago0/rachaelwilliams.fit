@@ -16,6 +16,7 @@
 
   languages = {
     terraform.enable = true;
+    javascript.enable = true;
   };
 
   # https://devenv.sh/scripts/

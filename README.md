@@ -51,14 +51,9 @@ git clone https://github.com/mago0/rachaelwilliams.fit.git
 cd rachaelwilliams.fit
 ```
 
-3. Build the Docker image:
+3. Build and run the Docker image via Docker Compose:
 ```
-docker build -t webapp .
-```
-
-4. Run the Docker image:
-```
-docker run -p 3000:3000 webapp
+docker compose up
 ```
 
 5. Open up your from browser and navigate to `http://localhost:3000`.
