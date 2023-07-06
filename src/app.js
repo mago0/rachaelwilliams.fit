@@ -10,12 +10,6 @@ const port = process.env.PORT || config.listenPort
 const region = process.env.REGION || config.region
 const stripePricingTableID = process.env.STRIPE_PRICING_TABLE_ID || config.stripePricingTableID
 const stripePublishableKey = process.env.STRIPE_PUBLISHABLE_KEY || config.stripePublishableKey
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY
-
-if (!stripeSecretKey) {
-  console.error('Missing Stripe secret key. Set the STRIPE_SECRET_KEY environment variable.')
-  process.exit(1)
-}
 
 console.log(`Environment: ${environment}`)
 
@@ -52,11 +46,11 @@ app.post('/contact', (req, res) => {
       Source: 'noreply@rachaelwilliams.fit',
   }
 
-  // if (process.env.NODE_ENV === 'dev') {
-  //   // In development, just log the email content that would be sent
-  //   console.log(params)
-  //   res.status(200).send('OK')
-  // } else {
+  if (process.env.NODE_ENV === 'dev') {
+    // In development, just log the email content that would be sent
+    console.log(params)
+    res.status(200).send('OK')
+  } else {
     ses.sendEmail(params, function(err, data) {
         if (err) {
             console.log(err, err.stack)
@@ -66,7 +60,7 @@ app.post('/contact', (req, res) => {
             res.status(200).send('OK')
         }
     })
-  // }
+  }
 })
 
 

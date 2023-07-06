@@ -1,5 +1,8 @@
 resource "aws_route53_zone" "rachaelwilliams" {
   name = "rachaelwilliams.fit"
+  lifecycle {
+      prevent_destroy = true
+  }  
 }
 
 resource "aws_route53_record" "MX" {

@@ -10,6 +10,10 @@ body {
   background-color: #f7f7f7;
 }
 
+.about-image {
+  border-radius: 20px;
+}
+
 .navbar {
   background-color: #4f2454;
   padding: 1rem;
@@ -29,6 +33,30 @@ body {
 .footer {
   background-color: #4f2454;
   padding: 1rem;
+}
+
+.form-control {
+  height: 2.5rem;
+  font-size: 1.1rem;
+  line-height: 2;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  text-transform: uppercase;
+  transition: all 0.5s ease;
+}
+
+.btn:hover {
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.button-center {
+    display: flex;
+    justify-content: center;
 }
 
 .btn-start {
