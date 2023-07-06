@@ -38,7 +38,12 @@ npm run dev:logs
 
 ## Building and Deploying
 
-This needs AWS credentials for Terraform and Copilot. I recommend setting `AWS_PROFILE`.
+This needs AWS credentials for Terraform and Copilot. I recommend setting the following:
+
+```
+export AWS_PROFILE=
+export AWS_REGION=
+```
 
 ### Terraform
 
@@ -53,9 +58,9 @@ terraform apply
 Note: The `AmazonSESFullAccess` policy must be added to `webapp-stag-frontend-TaskRole` in order for the contact form to submit successfully. 
 
 1. Deploy env stag: `copilot env deploy --name stag`
-2. Deploy the stag service: `copilot svc deploy --env stag`
+2. Deploy the stag service: `COPILOT_ENVIRONMENT=stag copilot svc deploy --env stag`
 3. Deploy env prod: `copilot env deploy --name prod` 
-4. Deploy the prod service: `copilot svc deploy --env prod`
+4. Deploy the prod service: `COPILOT_ENVIRONMENT=prod copilot svc deploy --env prod`
 
 ### AWS Copilot (pipeline)
 

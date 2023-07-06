@@ -37,9 +37,6 @@ network:
 # storage:
   # readonly_fs: true       # Limit to read-only access to mounted root filesystems.
 
-variables:
-  NODE_ENV: '${COPILOT_ENVIRONMENT}'
- 
 # You can override any of the values defined above by environment.
 environments:
   stag:
@@ -47,6 +44,8 @@ environments:
       alias:
         - name: 'stag.rachaelwilliams.fit'
           hosted_zone: Z0902220170DUSA4HJFLM
+    variables:
+      NODE_ENV: 'stag'
   prod:
     http:
       alias:
@@ -54,6 +53,8 @@ environments:
           hosted_zone: Z0902220170DUSA4HJFLM
         - name: 'www.rachaelwilliams.fit'
           hosted_zone: Z0902220170DUSA4HJFLM
+    variables:
+      NODE_ENV: 'prod'
 
 #    count: 2               # Number of tasks to run for the "test" environment.
 #    deployment:            # The deployment strategy for the "test" environment.
