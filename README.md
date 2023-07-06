@@ -8,7 +8,7 @@ This repository contains the source code for the website, along with setup files
 
 This application is written in Node.js and uses Express. Most of the web UI is written in plain HTML, CSS, and Javascript.
 
-It's built on top of Docker and deployed to AWS using ECS/Fargate and an Application Load-balancer. We're using Terraform and AWS Copilot to manager the environment and deployments.
+It's built on top of Docker and deployed to AWS using ECS/Fargate and an Application Load-balancer. We're using Terraform and AWS Copilot to manage the environment and deployments.
 
 ## Installing & Running the App
 
