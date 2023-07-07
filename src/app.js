@@ -27,24 +27,28 @@ app.use(express.urlencoded({ extended: true }))
 
 const ses = new AWS.SES({ region })
 
+const buildParams = (data, contents) => {
+  return {
+    Destination: {
+        ToAddresses: ['rachael+contact@rachaelwilliams.fit'],
+    },
+    Message: {
+        Body: {
+            Text: { Data: contents },
+        },
+        Subject: { Data: `Contact Form Submission: ${data.name}` },
+    },
+    Source: 'noreply@rachaelwilliams.fit',
+  }
+}
+
 // POSTs
 app.post('/contact', (req, res) => {
   const data = req.body
 
   const contents = `${data.message}\n\n${data.name}\n${data.email}\n`
 
-  var params = {
-      Destination: {
-          ToAddresses: ['rachael+contact@rachaelwilliams.fit'],
-      },
-      Message: {
-          Body: {
-              Text: { Data: contents },
-          },
-          Subject: { Data: `Contact Form Submission: ${data.name}` },
-      },
-      Source: 'noreply@rachaelwilliams.fit',
-  }
+  var params = buildParams(data, contents)
 
   console.log('params: ', params)
   console.log('contents: ', contents)
@@ -76,18 +80,7 @@ app.post('/inquiry', (req, res) => {
   Investment Readiness: ${data["investment-readiness"]}\n
   Cell Phone Number: ${data.cellNumber}`
 
-  var params = {
-    Destination: {
-      ToAddresses: ['rachael+inquiry@rachaelwilliams.fit'],
-    },
-    Message: {
-      Body: {
-        Text: { Data: contents },
-      },
-      Subject: { Data: `Coaching Inquiry Form: ${data.name}` },
-    },
-    Source: 'noreply@rachaelwilliams.fit',
-  }
+  const params = buildParams(data, contents)
 
   console.log('params: ', params)
   console.log('contents: ', contents)
