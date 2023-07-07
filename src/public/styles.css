@@ -1,11 +1,13 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   line-height: 1.6;
   background-color: #f7f7f7;
 }
@@ -25,11 +27,11 @@ body {
 }
 
 .navbar-logo {
-  height: 5vh; 
+  height: 5vh;
 }
 
 .navbar-title {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-stretch: ultra-condensed;
   font-weight: 500;
   color: #d1d1d1;
@@ -56,28 +58,28 @@ body {
 }
 
 .btn:hover {
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .button-center {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .btn-outline-primary {
-  border-color: #BBD6BF !important; 
+  border-color: #bbd6bf !important;
 }
 
 .btn-outline-primary:hover {
-  background-color: #BBD6BF !important; 
-  border-color: #BBD6BF !important; 
+  background-color: #bbd6bf !important;
+  border-color: #bbd6bf !important;
 }
 
 .hero {
-  background-image: url('images/hero.jpg');
+  background-image: url("images/hero.jpg");
   background-position: center;
   background-size: cover;
-  width: 100% ;
+  width: 100%;
   position: relative;
   padding-top: 30%; /* The magic line */
   overflow: hidden; /* Ensure that nothing exceeds this area */
