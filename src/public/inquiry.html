@@ -5,7 +5,7 @@
   
     <br>
     <label for="goals">Which of these best describes your goals?</label>
-    <select id="goals" class="form-control" required>
+    <select name="goals" id="goals" class="form-control" required>
       <option selected>Select option</option>
       <option value="1">I want to improve my overall fitness, get stronger, gain confidence, and have more energy</option>
       <option value="2">I want to move without pain</option>
@@ -15,16 +15,16 @@
   
     <br><br>
     <label for="occupation" class="form-label">Briefly explain your current (or previous, if retired) occupation and how long you have been doing it.</label>
-    <input type="text" id="occupation" class="form-control" name="occupation" required>
+    <input name="occupation" type="text" id="occupation" class="form-control" required>
   
     <br><br>
     <label for="hobbies">Briefly explain any activities or hobbies you have. How do you spend most of your free time?</label>
-    <textarea class="form-control" id="hobbies" rows="3" required></textarea>
+    <textarea class="form-control" name="hobbies" id="hobbies" rows="3" required></textarea>
     <!-- Add the rest of your form fields similarly-->
   
     <br><br>
     <label for="seriousness">Being honest with yourself, how serious are you about reaching your strength and mobility goals?</label>
-    <select id="seriousness" class="form-control" required>
+    <select name="seriousness" id="seriousness" class="form-control" required>
         <option selected>Select option</option>
         <option value="1">Somewhat serious</option>
         <option value="2">Serious</option>
@@ -33,7 +33,7 @@
   
     <br><br>
     <label for="investment-readiness">If you were to reach all of your goals to increase the way you move, feel, and perform, from daily tasks to favorite hobbies, would you be willing (and able) to invest in getting the necessary help to get there?</label>
-    <select id="investment-readiness" class="form-control" required>
+    <select name="investment-readiness" id="investment-readiness" class="form-control" required>
         <option selected>Select option</option>
         <option value="1">Yes, I have cash flow to invest in myself</option>
         <option value="2">Yes, I may or may not have the cash flow, but I’m resourceful and/or have access to credit</option>
@@ -42,11 +42,11 @@
   
     <br><br>
     <label for="name" class="form-label">Name and Age</label>
-    <input type="text" id="name" class="form-control" placeholder="Enter your name and age" required>
+    <input type="text" name="name" id="name" class="form-control" placeholder="Enter your name and age" required>
   
     <br><br>
     <label for="cellNumber" class="form-label">What is your cell phone number?</label>
-    <input type="tel" id="cellNumber" class="form-control" placeholder="Enter your cell phone number without dashes" required pattern="[0-9]{10,15}" title="Phone number should only contain digits(0-9). Min 10 digits, Max 15 digits.">
+    <input type="tel" name="cellNumber" id="cellNumber" class="form-control" placeholder="Enter your cell phone number without dashes" required pattern="[0-9]{10,15}" title="Phone number should only contain digits(0-9). Min 10 digits, Max 15 digits.">
     <p class="text-muted">Please confirm your mobile number. It’s important that this is correct so that I can confirm for your form submission and let you know if I can help you!</p>
   
     <div class="form-group">
@@ -61,20 +61,24 @@
 
       // Check if goal is selected
       if ($('#goals').val() == "Select option") {
-          alert("Please select a goal.");
-          isValid = false;
+        alert("Please select a goal.");
+        isValid = false;
       }
       // Check if seriousness is selected
       if ($('#seriousness').val() == "Select option") {
-          alert("Please select how serious you are about your goals.");
-          isValid = false;
+        alert("Please select how serious you are about your goals.");
+        isValid = false;
       }
       // Check if investment-readiness is selected
       if ($('#investment-readiness').val() == "Select option") {
-          alert("Please select your investment readiness.");
-          isValid = false;
+        alert("Please select your investment readiness.");
+        isValid = false;
       }
   
+      if (!isValid) {
+        return;
+      }
+
       // serialize form data
       var formData = $(this).serialize()
       // Ajax post
@@ -83,15 +87,15 @@
         url: '/inquiry',
         data: formData,
         success: function() {
-            $('#inquiry-title').html('<h2>Thanks for your submission.</h2>')
-            $('form').html(
-              '<p>Your response has been recorded. You will be contacted for further consultation.</p>' +
-              '<br><p>Redirecting to packages page...</p>'
-              )
+          $('#inquiry-title').html('<h2>Thanks for your submission.</h2>')
+          $('form').html(
+            '<p>Your response has been recorded. You will be contacted for further consultation.</p>' +
+            '<br><p>Redirecting to packages page...</p>'
+          )
 
-            setTimeout(function() {
-              $('#main-container').load('/packages');
-            }, 5000); // Wait 5 seconds
+          setTimeout(function() {
+            $('#main-container').load('/packages');
+          }, 5000); // Wait 5 seconds
         }
       })
     })

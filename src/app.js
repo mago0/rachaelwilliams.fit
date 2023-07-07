@@ -46,9 +46,10 @@ app.post('/contact', (req, res) => {
       Source: 'noreply@rachaelwilliams.fit',
   }
 
+  console.log('params: ', params)
+  console.log('contents: ', contents)
+
   if (process.env.NODE_ENV === 'dev') {
-    // In development, just log the email content that would be sent
-    console.log(params)
     res.status(200).send('OK')
   } else {
     ses.sendEmail(params, function(err, data) {
@@ -88,9 +89,10 @@ app.post('/inquiry', (req, res) => {
     Source: 'noreply@rachaelwilliams.fit',
   }
 
+  console.log('params: ', params)
+  console.log('contents: ', contents)
+
   if (process.env.NODE_ENV === 'dev') {
-    // In development, just log the email content that would be sent
-    console.log(params)
     res.status(200).send('OK')
   } else {
     ses.sendEmail(params, function(err, data) {
