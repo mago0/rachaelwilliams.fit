@@ -63,6 +63,47 @@ app.post('/contact', (req, res) => {
   }
 })
 
+app.post('/inquiry', (req, res) => {
+  const data = req.body
+
+  // concatenates all form data into a string
+  const contents = `Name and Age: ${data.name}\n
+  Goal: ${data.goals}\n
+  Occupation: ${data.occupation}\n
+  Hobbies: ${data.hobbies}\n
+  Seriousness: ${data.seriousness}\n
+  Investment Readiness: ${data["investment-readiness"]}\n
+  Cell Phone Number: ${data.cellNumber}`
+
+  var params = {
+    Destination: {
+      ToAddresses: ['rachael+inquiry@rachaelwilliams.fit'],
+    },
+    Message: {
+      Body: {
+        Text: { Data: contents },
+      },
+      Subject: { Data: `Coaching Inquiry Form: ${data.name}` },
+    },
+    Source: 'noreply@rachaelwilliams.fit',
+  }
+
+  if (process.env.NODE_ENV === 'dev') {
+    // In development, just log the email content that would be sent
+    console.log(params)
+    res.status(200).send('OK')
+  } else {
+    ses.sendEmail(params, function(err, data) {
+      if (err) {
+        console.log(err, err.stack)
+        res.status(500).send('Something went wrong')
+      } else {
+        console.log(data)
+        res.status(200).send('OK')
+      }
+    })
+  }
+})
 
 app.get("/healthz", (req, res) => {
   res.status(200).send("OK")

@@ -29,38 +29,31 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
     $(function() {
+
       $("#header-container").load("header.html", function() {
-        $("#navbar-logo").on("click", function(e) {
+        $("#header-container").on("click", "#navbar-logo, #navbar-title, #home-link", function(e) {
           e.preventDefault()
           $("#main-container").load("home.html")
         })
-        $("#navbar-title").on("click", function(e) {
-          e.preventDefault()
-          $("#main-container").load("home.html")
-        })
-        $("#home-link").on("click", function(e) {
-          e.preventDefault()
-          $("#main-container").load("home.html")
-        })
-        $("#packages-link").on("click", function(e) {
-          e.preventDefault()
-          $("#main-container").load("/packages")
-        })
-        $("#about-link").on("click", function(e) {
+
+        $("#header-container").on("click", "#about-link", function(e) {
           e.preventDefault()
           $("#main-container").load("about.html")
         })
-        $("#contact-link").on("click", function(e) {
+
+        $("#header-container").on("click", "#contact-link", function(e) {
           e.preventDefault()
           $("#main-container").load("contact.html")
         })
       })
+
       $("#main-container").load("home.html", function() {
-        $("#btn-start").on("click", function(e) {
+        $("#main-container").on("click", "#btn-start", function(e) {
           e.preventDefault()
-          $("#main-container").load("/packages")
+          $("#main-container").load("inquiry.html")
         })
       })
+
       $("#footer-container").load("footer.html")
     })
   </script>
