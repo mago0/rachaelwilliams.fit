@@ -87,6 +87,8 @@
         url: '/inquiry',
         data: formData,
         success: function() {
+          localStorage.setItem('hasSubmittedInquiry', true)
+
           $('#inquiry-title').html('<h2>Thanks for your submission.</h2>')
           $('form').html(
             '<p>Your response has been recorded. You will be contacted for further consultation.</p>' +

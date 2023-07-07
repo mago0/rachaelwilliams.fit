@@ -45,14 +45,19 @@
           e.preventDefault()
           $("#main-container").load("contact.html")
         })
-      })
 
-      $("#main-container").load("home.html", function() {
-        $("#main-container").on("click", "#btn-start", function(e) {
+        $("#header-container").on("click", "#signup", function(e) {
           e.preventDefault()
-          $("#main-container").load("inquiry.html")
+          $("#main-container").load("inquiry.html", function() {
+            const hasSubmittedInquiry = localStorage.getItem('hasSubmittedInquiry');
+            if(hasSubmittedInquiry || !$('form').length) {
+              $('#main-container').load('/packages');
+            }
+          })
         })
       })
+
+      $("#main-container").load("home.html")
 
       $("#footer-container").load("footer.html")
     })

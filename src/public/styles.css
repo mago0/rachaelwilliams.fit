@@ -14,6 +14,11 @@ body {
   border-radius: 20px;
 }
 
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
 .navbar {
   background-color: #4f2454;
   padding: 1rem;
@@ -59,15 +64,38 @@ body {
     justify-content: center;
 }
 
-.btn-start {
-    border: 3px solid #4f2454;
+.btn-outline-primary {
+  border-color: #BBD6BF !important; 
+}
+
+.btn-outline-primary:hover {
+  background-color: #BBD6BF !important; 
+  border-color: #BBD6BF !important; 
 }
 
 .hero {
   background-image: url('images/hero.jpg');
   background-position: center;
   background-size: cover;
-  height: 45vh;
+  width: 100% ;
+  position: relative;
+  padding-top: 30%; /* The magic line */
+  overflow: hidden; /* Ensure that nothing exceeds this area */
+}
+
+.hero .container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.hero .container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .service {
