@@ -27,10 +27,11 @@ body {
 }
 
 .navbar-logo {
-  height: 5vh;
+  height: 100px;
 }
 
 .navbar-title {
+  padding-left: 10px;
   font-family: "Roboto", sans-serif;
   font-stretch: ultra-condensed;
   font-weight: 500;
@@ -136,6 +137,9 @@ body {
 }
 
 @media (max-width: 768px) {
+  .nav-item {
+    margin-right: 0px;
+  }
   .service-paragraph {
     width: 90%; /* reduce the width of the service div for mobile screens */
     margin: 0 auto; /* center the service div on mobile */
@@ -148,5 +152,27 @@ body {
   .testimonial {
     margin: 0 auto 2rem;
     width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-logo {
+    height: 50px;
+  }
+  .nav-item,
+  .nav-link,
+  .btn {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .navbar-logo {
+    height: 50px;
+  }
+  .nav-item,
+  .nav-link,
+  .btn {
+    font-size: 10px;
   }
 }
