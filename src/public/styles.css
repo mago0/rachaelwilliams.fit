@@ -1,3 +1,8 @@
+:root {
+  --theme-green: #bbd6bf;
+  --theme-purple: #4f2454;
+}
+
 *,
 *::before,
 *::after {
@@ -67,13 +72,20 @@ body {
   justify-content: center;
 }
 
-.btn-outline-primary {
-  border-color: #bbd6bf !important;
+/* Signup button */
+.btn.btn-outline-primary {
+  background-color: var(--theme-green);
+  border-color: var(--theme-green);
 }
 
-.btn-outline-primary:hover {
-  background-color: #bbd6bf !important;
-  border-color: #bbd6bf !important;
+.btn.btn-outline-primary .nav-link {
+  color: var(--theme-purple) !important;
+}
+
+/* Change color on hover */
+.btn.btn-outline-primary:hover {
+  background-color: #859a8a; /* Darker shade of green */
+  border-color: #859a8a; /* Darker shade of green */
 }
 
 .hero {
