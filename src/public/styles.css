@@ -137,6 +137,9 @@ body {
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
   .nav-item {
     margin-right: 0px;
   }
