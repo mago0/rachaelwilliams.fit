@@ -59,7 +59,6 @@ body {
 }
 
 .btn {
-  text-transform: uppercase;
   transition: all 0.5s ease;
 }
 
@@ -72,7 +71,7 @@ body {
   justify-content: center;
 }
 
-/* Signup button */
+/* get started button */
 .btn.btn-outline-primary {
   background-color: var(--theme-green);
   border-color: var(--theme-green);
@@ -80,6 +79,10 @@ body {
 
 .btn.btn-outline-primary .nav-link {
   color: var(--theme-purple) !important;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 /* Change color on hover */
