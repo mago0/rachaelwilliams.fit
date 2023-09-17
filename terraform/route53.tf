@@ -88,6 +88,14 @@ resource "aws_route53_record" "bounce_CNAME" {
   records = ["custom-email-domain.stripe.com."]
 }
 
+resource "aws_route53_record" "forms_CNAME" {
+  zone_id = aws_route53_zone.rachaelwilliams.zone_id
+  name    = "forms.rachaelwilliams.fit"
+  type    = "CNAME"
+  ttl     = 300
+  records = ["cname.tally.so."]
+}
+
 output "route53_zone_id" {
   value = aws_route53_zone.rachaelwilliams.zone_id
 }

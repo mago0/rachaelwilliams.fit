@@ -16,6 +16,7 @@
       gtag("config", "G-TNXBSPESSK")
     </script>
     <!-- End Google tag (gtag.js) -->
+    <script src="https://tally.so/widgets/embed.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
@@ -39,6 +40,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+      const tallyFormId = "wdaerq"
       $(function () {
         $("#header-container").load("header.html", function () {
           $("#header-container").on(
@@ -62,14 +64,15 @@
 
           $("#header-container").on("click", "#get-started", function (e) {
             e.preventDefault()
-            $("#main-container").load("inquiry.html", function () {
-              const hasSubmittedInquiry = localStorage.getItem(
-                "hasSubmittedInquiry",
-              )
-              if (hasSubmittedInquiry || !$("form").length) {
-                $("#main-container").load("/packages")
-              }
-            })
+            if (localStorage.getItem("hasSubmittedInquiry") === "true") {
+              $("#main-container").load("/packages")
+            } else {
+              Tally.openPopup(tallyFormId, {
+                onSubmit: (_) => {
+                  localStorage.setItem("hasSubmittedInquiry", "true")
+                },
+              })
+            }
           })
         })
 

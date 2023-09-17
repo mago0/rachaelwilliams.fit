@@ -1,6 +1,6 @@
 # Rachael Williams Online Strength and Mobility
 
-Welcome to the repository for *rachaelwilliams.fit*. This website is a platform for Rachael Williams, a professional personal trainer, to offer her strength and mobility training services to clients.
+Welcome to the repository for _rachaelwilliams.fit_. This website is a platform for Rachael Williams, a professional personal trainer, to offer her strength and mobility training services to clients.
 
 This repository contains the source code for the website, along with setup files, scripts, tests, and other resources necessary to run, maintain, and scale the platform.
 
@@ -15,12 +15,14 @@ It's built on top of Docker and deployed to AWS using ECS/Fargate and an Applica
 Before you run the application, it is necessary to have [Docker](https://docs.docker.com/get-docker/) installed on your machine. After Docker is installed, follow these steps:
 
 1. Clone and navigate into this repository:
+
 ```
 git clone https://github.com/mago0/rachaelwilliams.fit.git
 cd rachaelwilliams.fit
 ```
 
 2. Build and run the Docker image via Docker Compose:
+
 ```
 docker compose up
 # or
@@ -28,6 +30,7 @@ npm run dev
 ```
 
 3. (optional) View the container logs.
+
 ```
 docker compose logs -f
 # or
@@ -55,19 +58,19 @@ terraform apply
 
 ### AWS Copilot (manual)
 
-Note: The `AmazonSESFullAccess` policy must be added to `webapp-stag-frontend-TaskRole` in order for the contact form to submit successfully. 
+Note: The `AmazonSESFullAccess` policy must be added to `webapp-stag-frontend-TaskRole` in order for the contact form to submit successfully.
 
 1. Deploy env stag: `copilot env deploy --name stag`
 2. Deploy the stag service: `COPILOT_ENVIRONMENT=stag copilot svc deploy --env stag`
-3. Deploy env prod: `copilot env deploy --name prod` 
+3. Deploy env prod: `copilot env deploy --name prod`
 4. Deploy the prod service: `COPILOT_ENVIRONMENT=prod copilot svc deploy --env prod`
 
 ### AWS Copilot (pipeline)
 
 This deployment method is automated.
 
-1. Push to git @main will deploy to stag
-2. Tag @main will deploy to prod
+1. Push to git @main will deploy prod
 
 ### Feedback
+
 I'm not sure why you'd be contributing to this but you can do so [here](https://github.com/mago0/rachaelwilliams.fit/issues).
