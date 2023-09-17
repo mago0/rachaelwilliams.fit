@@ -26,7 +26,7 @@ const config = {
   prod: {
     listenPort: 3000,
     region: "us-east-1",
-    stripePricingTableID: "prctbl_1NQC7rLU6KY872bhoZuugpAJ",
+    stripePricingTableID: "prctbl_1NrMwmLU6KY872bhORfPiwhq",
     stripePublishableKey:
       "pk_live_51NHsWeLU6KY872bhQGQXnc1Dk5jUKPAkBNo68YvoBa3QUvyKBm44RpZc52cC5qMTVUCSWI8v1qzfUUZy0eQ2J7mc00yEdZZfTR",
   },
