@@ -70,6 +70,7 @@
               Tally.openPopup(tallyFormId, {
                 onSubmit: (_) => {
                   localStorage.setItem("hasSubmittedInquiry", "true")
+                  $("#main-container").load("/packages")
                 },
               })
             }
