@@ -1,6 +1,6 @@
 # Rachael Williams Online Strength and Mobility
 
-Welcome to the repository for _rachaelwilliams.fit_. This website is a platform for Rachael Williams, a professional personal trainer, to offer her strength and mobility training services to clients.
+Welcome to the repository for [rachaelwilliams.fit](https://rachaelwilliams.fit). This website is a platform for Rachael Williams, a professional personal trainer, to offer her strength and mobility training services to clients.
 
 This repository contains the source code for the website, along with setup files, scripts, tests, and other resources necessary to run, maintain, and scale the platform.
 
@@ -58,12 +58,10 @@ terraform apply
 
 ### AWS Copilot (manual)
 
-Note: The `AmazonSESFullAccess` policy must be added to `webapp-stag-frontend-TaskRole` in order for the contact form to submit successfully.
+Note: The `AmazonSESFullAccess` policy must be added to `webapp-prod-frontend-TaskRole` in order for the contact form to submit successfully.
 
-1. Deploy env stag: `copilot env deploy --name stag`
-2. Deploy the stag service: `COPILOT_ENVIRONMENT=stag copilot svc deploy --env stag`
-3. Deploy env prod: `copilot env deploy --name prod`
-4. Deploy the prod service: `COPILOT_ENVIRONMENT=prod copilot svc deploy --env prod`
+1. Deploy env prod: `copilot env deploy --name prod`
+2. Deploy the prod service: `COPILOT_ENVIRONMENT=prod copilot svc deploy --env prod`
 
 ### AWS Copilot (pipeline)
 

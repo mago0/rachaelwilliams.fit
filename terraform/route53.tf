@@ -21,6 +21,7 @@ resource "aws_route53_record" "TXT" {
   records = [
     "google-site-verification=28CPcxZ23FqNlwb8op8P84tRd34DV4MwlHTNc-vNBqY",
     "stripe-verification=8b048cd8c83fe6c3751e9d930ab895efd83df9e2dbe1bd4ae7f3c8b916a9c6e5",
+    "ahrefs-site-verification_22a88787daa4ff5f2eda77ba4e38f5d9e60b942e8b2337d1b8cd5c5565a01eb8"
   ]
 }
 
@@ -94,6 +95,18 @@ resource "aws_route53_record" "forms_CNAME" {
   type    = "CNAME"
   ttl     = 300
   records = ["cname.tally.so."]
+}
+
+resource "aws_route53_record" "blog_NS" {
+  zone_id = aws_route53_zone.rachaelwilliams.zone_id
+  name    = "blog.rachaelwilliams.fit"
+  type    = "NS"
+  ttl     = 300
+  records = [
+    "ns1.wordpress.com",
+    "ns2.wordpress.com",
+    "ns3.wordpress.com",
+  ]
 }
 
 output "route53_zone_id" {
