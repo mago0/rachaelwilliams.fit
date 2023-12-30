@@ -8,6 +8,7 @@ services:
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
-    command: npx nodemon
     environment:
       - NODE_ENV=dev
+      - DEBUG=webserver:*
+    command: npx nodemon

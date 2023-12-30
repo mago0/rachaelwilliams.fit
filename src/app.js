@@ -1,4 +1,5 @@
 const express = require("express")
+const compression = require("compression")
 const dotenv = require("dotenv")
 const path = require("path")
 const config = require("./config")
@@ -20,6 +21,8 @@ const app = express()
 // Use the EJS templating language
 app.set("view engine", "ejs")
 app.set("views", path.join(__dirname, "views"))
+
+app.use(compression())
 
 // Serve static assets from the 'public' folder
 app.use(express.static(path.join(__dirname, "public")))
@@ -113,10 +116,22 @@ app.get("/packages", (req, res) => {
   })
 })
 
-// If no matching route is found, serve the main index.html file
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"))
+app.get("/", (req, res) => {
+  res.render("index")
 })
+
+app.get("/about", (req, res) => {
+  res.render("about")
+})
+
+app.get("/contact", (req, res) => {
+  res.render("contact")
+})
+
+// If no matching route is found, serve the main index.html file
+// app.use((req, res) => {
+//   res.sendFile(path.join(__dirname, "public", "index.html"))
+// })
 
 // Start the server
 app.listen(port, () => {

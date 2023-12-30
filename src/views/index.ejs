@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head', { title: 'Home' }) %>
+<body>
+    <%- include('partials/header') %>
+
+    <h1 style="display: none;">Home</h1>
+
+    <main>
+      <section
+        class="hero jumbotron jumbotron-fluid text-center text-white bg-info"
+      >
+        <!-- <div class="container d-flex align-items-center justify-content-center h-100">
+          <a href="#" class="btn btn-start btn-light mt-3" id="btn-start">START YOUR JOURNEY TODAY</a>
+        </div> -->
+      </section>
+      <section class="services">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4 service">
+              <img
+                src="images/services-3.jpg"
+                alt="Man doing mobility work"
+                class="service-image"
+              />
+              <h3>Mobility Enhancement</h3>
+              <p class="service-paragraph">
+                Programming to increase your range of motion and help improve
+                strength, balance, pliability, and flexibility.
+              </p>
+            </div>
+            <div class="col-md-4 service">
+              <img
+                src="images/services-2.jpg"
+                alt="Girl squatting"
+                class="service-image"
+              />
+              <h3>Strength Training</h3>
+              <p class="service-paragraph">
+                Programming to increase muscle mass, endurance, and strength.
+              </p>
+            </div>
+            <div class="col-md-4 service">
+              <img
+                src="images/services-1.jpg"
+                alt="Consultation"
+                class="service-image"
+              />
+              <h3>Consultation</h3>
+              <p class="service-paragraph">
+                Individualized assessment and guidance to optimize your goal
+                setting, programming, and performance.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="container">
+        <hr />
+      </div>
+      <section class="testimonials">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 testimonial">
+              <h2>What my clients say</h2>
+            </div>
+            <div class="col-md-6"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 testimonial">
+              <p>
+                "Before starting with Rachael I didn’t know how to do certain
+                exercises. Also, I didn’t know the correct timing to do
+                cardio/weight lifting. She helped me successfully do the exercises I
+                was hesitant about and formed a doable workout plan that includes
+                cardio and weight lifting so I don’t have to wonder which one to do.
+                She also always answers quickly whenever I have questions about the
+                workouts. I can now successfully do a deadlift and a squat. I have
+                gained muscle, become stronger, and have gained confidence in what I
+                can do."
+              </p>
+              <span>- Jenna</span>
+            </div>
+            <div class="col-md-6 testimonial">
+              <p>
+                "I didn’t have any reservations before we started working together
+                but my knee flexibility was very poor, I was willing to try
+                anything. Rachael walked me through what I needed to do and showed
+                me how simple it could be to improve flexibility and help my knees
+                in the long run. The plan is very simple, but the improvements it
+                has made have been amazing. I now have improved knee flexibility, my
+                squat form has improved drastically, and knee pain has significantly
+                decreased."
+              </p>
+              <span>- Brandon</span>
+            </div>
+            <div class="col-md-6 testimonial">
+              <p>
+                "I was looking forward to working with Rachael because of my
+                experience in her SilverSneakers classes. Her positive attitude and
+                smiling face is great. Her energetic personality is a motivational
+                force for me. My top two goals when we started were to improve my
+                balance and strengthen my back. I now have better balance and am
+                stronger!"
+              </p>
+              <span>- Betty</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <%- include('partials/footer') %>
+    <%- include('partials/scripts') %>
+
+</body>
+</html>
