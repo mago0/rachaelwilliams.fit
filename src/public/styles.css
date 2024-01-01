@@ -11,6 +11,14 @@
   padding: 0;
 }
 
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   line-height: 1.6;
@@ -27,7 +35,8 @@ body {
 }
 
 .navbar {
-  background-color: #4f2454;
+  /** background-color: #4f2454; **/
+  background-color: #231834;
   padding: 1rem;
 }
 
@@ -41,10 +50,11 @@ body {
   font-stretch: ultra-condensed;
   font-weight: 500;
   color: #d1d1d1;
+  text-decoration: none;
 }
 
 .footer {
-  background-color: #4f2454;
+  background-color: #231834;
   padding: 1rem;
 }
 
@@ -85,10 +95,13 @@ body {
   padding-bottom: 5px;
 }
 
-/* Change color on hover */
-.btn.btn-outline-primary:hover {
+.btn-get-started {
   background-color: #859a8a; /* Darker shade of green */
   border-color: #859a8a; /* Darker shade of green */
+}
+
+.menu-space {
+  margin-right: 10px;
 }
 
 .hero {
@@ -132,19 +145,36 @@ body {
   border-top-right-radius: 20px;
 }
 
+.service-title {
+  padding-top: 25px;
+  padding-bottom: 20px;
+}
+
 .testimonials {
   padding: 2rem 0;
 }
 
 .testimonial {
   margin: 0 auto 2rem;
-  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.testimonial span {
+.testimonial-source {
   display: block;
   font-style: italic;
   text-align: right;
+  align-self: flex-end;
+  width: 100%;
+}
+
+.testimonial i {
+  margin-right: 0.5rem;
+}
+
+.testimonial p {
+  margin-bottom: 0;
 }
 
 .about {
@@ -158,6 +188,9 @@ body {
   .nav-item {
     margin-right: 0px;
   }
+  .navbar-nav {
+    align-items: center;
+  }
   .service-paragraph {
     width: 90%; /* reduce the width of the service div for mobile screens */
     margin: 0 auto; /* center the service div on mobile */
@@ -166,10 +199,6 @@ body {
   .service-image {
     width: 90%; /* reduce the width of the image for mobile screens */
     margin: 0 auto; /* center the image on mobile */
-  }
-  .testimonial {
-    margin: 0 auto 2rem;
-    width: 90%;
   }
 }
 

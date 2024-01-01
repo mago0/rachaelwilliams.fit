@@ -128,6 +128,10 @@ app.get("/contact", (req, res) => {
   res.render("contact")
 })
 
+app.get("/inquiry-confirmation", (req, res) => {
+  res.render("inquiry-confirmation")
+})
+
 // If no matching route is found, serve the main index.html file
 // app.use((req, res) => {
 //   res.sendFile(path.join(__dirname, "public", "index.html"))
