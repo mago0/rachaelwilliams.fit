@@ -112,6 +112,7 @@ body {
   position: relative;
   padding-top: 30%; /* The magic line */
   overflow: hidden; /* Ensure that nothing exceeds this area */
+  opacity: 0.9;
 }
 
 .hero .container {
