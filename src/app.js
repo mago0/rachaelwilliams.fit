@@ -1,4 +1,6 @@
 const express = require("express")
+const request = require("request")
+const bodyParser = require("body-parser")
 const compression = require("compression")
 const dotenv = require("dotenv")
 const path = require("path")
@@ -13,6 +15,8 @@ const stripePricingTableID =
   process.env.STRIPE_PRICING_TABLE_ID || config.stripePricingTableID
 const stripePublishableKey =
   process.env.STRIPE_PUBLISHABLE_KEY || config.stripePublishableKey
+const recaptchaSecretKey =
+  process.env.RECAPTCHA_SECRET_KEY || config.recaptchaSecretKey
 
 console.log(`Environment: ${environment}`)
 
@@ -29,6 +33,7 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
 const ses = new AWS.SES({ region })
 
@@ -51,26 +56,40 @@ const buildParams = (data, contents) => {
 app.post("/contact", (req, res) => {
   const data = req.body
 
-  const contents = `${data.message}\n\n${data.name}\n${data.email}\n`
-
-  var params = buildParams(data, contents)
-
-  console.log("params: ", params)
-  console.log("contents: ", contents)
-
-  if (process.env.NODE_ENV === "dev") {
-    res.status(200).send("OK")
-  } else {
-    ses.sendEmail(params, function (err, data) {
-      if (err) {
-        console.log(err, err.stack)
-        res.status(500).send("Something went wrong")
-      } else {
-        console.log(data)
-        res.status(200).send("OK")
-      }
-    })
+  if (!data["g-recaptcha-response"]) {
+    return res.status(400).send("reCAPTCHA token is missing.")
   }
+
+  const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${data["g-recaptcha-response"]}`
+
+  request(verificationURL, function (error, response, body) {
+    body = JSON.parse(body)
+
+    if (body.success !== undefined && !body.success) {
+      return res.status(401).send("Failed captcha verification")
+    }
+
+    const contents = `${data.message}\n\n${data.name}\n${data.email}\n`
+
+    var params = buildParams(data, contents)
+
+    console.log("params: ", params)
+    console.log("contents: ", contents)
+
+    if (process.env.NODE_ENV === "dev") {
+      res.status(200).send("OK")
+    } else {
+      ses.sendEmail(params, function (err, data) {
+        if (err) {
+          console.log(err, err.stack)
+          res.status(500).send("Something went wrong")
+        } else {
+          console.log(data)
+          res.status(200).send("OK")
+        }
+      })
+    }
+  })
 })
 
 app.post("/inquiry", (req, res) => {
