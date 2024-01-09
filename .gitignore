@@ -7,3 +7,4 @@ devenv.local.nix
 .DS_Store
 node_modules
 **/.terraform
+src/config.js
