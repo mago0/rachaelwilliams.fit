@@ -62,22 +62,27 @@ app.post("/contact", async (req, res) => {
 
   try {
     const verificationURL = `https://www.google.com/recaptcha/api/siteverify`
+    const token = data["g-recaptcha-response"]
     const response = await axios.post(
       verificationURL,
-      {},
+      `secret=${recaptchaSecretKey}&response=${token}`,
       {
-        params: {
-          secret: recaptchaSecretKey,
-          response: data["g-recaptcha-response"],
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
         },
       },
     )
+    console.log("reCAPTCHA response:", JSON.stringify(response.data, null, 2))
 
     if (!response.data.success) {
+      if (response.data["error-codes"]) {
+        console.log("reCAPTCHA error codes:", response.data["error-codes"])
+      }
       return res.status(401).send("Failed captcha verification")
     }
 
-    const contents = `${data.message}\n\n${data.name}\n${data.email}\n`
+    // Use the email and message fields from the contact form
+    const contents = `Message: ${data.message}\n\nName: ${data.name}\nEmail: ${data.email}\n`
     const params = buildParams(data, contents)
 
     if (process.env.NODE_ENV === "dev") {

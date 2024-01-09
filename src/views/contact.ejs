@@ -4,7 +4,7 @@
 <body>
   <%- include('partials/header') %>
 
-  <h1 style="display: none;">Contact Form</h1>
+  <h1 style="display: none">Contact Form</h1>
 
   <div class="container my-5">
     <h2 class="mx-auto my-5" style="max-width: 500px" id="contact-title">
@@ -49,7 +49,7 @@
           placeholder="Your message here"
         ></textarea>
       </div>
-      <div class="g-recaptcha" data-sitekey="<%= recaptchaSiteKey %>" data-callback="onReCaptchaSuccess"></div>
+      <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
       <div class="form-group">
         <button type="submit" class="btn btn-primary btn-block my-3">
           Submit
@@ -57,38 +57,41 @@
       </div>
     </form>
     <%- include('partials/scripts') %>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=<%= recaptchaSiteKey %>"></script>
     <script>
-      // Callback function to handle the form submission after reCAPTCHA success
-      function onReCaptchaSuccess(token) {
-        var formData = $('#contactForm').serialize()
-        formData += '&g-recaptcha-response=' + token
-
-        // Ajax post to the server with the form data and the reCAPTCHA token
-        $.ajax({
-          type: "POST",
-          url: "/contact",
-          data: formData,
-          dataType: "text",
-          success: function () {
-            // Update the UI to show a success message
-            $("#contact-title").html("<h2>Thanks!</h2>")
-            $("#contactForm").html("<p>I'll get back to you as soon as possible.</p>")
-          },
-          error: function (xhr, status, error) {
-            // Log the error and update the UI to show an error message
-            console.error("Error in form submission:", status, error)
-            $("#contact-title").html("<h2>Oh no!</h2>")
-            $("#contactForm").html("<p>There was an error with your submission. Please refresh and try again.</p>")
-          }
-        });
-      }
-
-      // Document ready function to attach the submit event handler to the form
-      $(document).ready(function() {
+      grecaptcha.ready(function() {
+        // Attach the submit event handler to the form
         $('#contactForm').on("submit", function (event) {
-          event.preventDefault()
-        })
+          event.preventDefault();
+    
+          // Execute reCAPTCHA v3 with the 'submit' action
+          grecaptcha.execute('<%= recaptchaSiteKey %>', {action: 'submit'}).then(function(token) {
+            // Add the token to the hidden input
+            $('#g-recaptcha-response').val(token);
+    
+            // Now serialize the form data which includes the reCAPTCHA token
+            var formData = $('#contactForm').serialize();
+    
+            // Submit the form with the reCAPTCHA token
+            $.ajax({
+              type: "POST",
+              url: "/contact",
+              data: formData,
+              dataType: "text",
+              success: function () {
+                // Update the UI to show a success message
+                $("#contact-title").html("<h2>Thanks!</h2>");
+                $("#contactForm").html("<p>I'll get back to you as soon as possible.</p>");
+              },
+              error: function (xhr, status, error) {
+                // Log the error and update the UI to show an error message
+                console.error("Error in form submission:", status, error);
+                $("#contact-title").html("<h2>Oh no!</h2>");
+                $("#contactForm").html("<p>There was an error with your submission. Please refresh and try again.</p>");
+              }
+            });
+          });
+        });
       });
     </script>
   </div>
