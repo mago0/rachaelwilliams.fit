@@ -60,9 +60,10 @@ app.post("/contact", async (req, res) => {
     return res.status(400).send("reCAPTCHA token is missing.")
   }
 
+  const verificationURL = `https://www.google.com/recaptcha/api/siteverify`
+  const token = data["g-recaptcha-response"]
+
   try {
-    const verificationURL = `https://www.google.com/recaptcha/api/siteverify`
-    const token = data["g-recaptcha-response"]
     const response = await axios.post(
       verificationURL,
       `secret=${recaptchaSecretKey}&response=${token}`,
@@ -72,12 +73,13 @@ app.post("/contact", async (req, res) => {
         },
       },
     )
-    console.log("reCAPTCHA response:", JSON.stringify(response.data, null, 2))
 
-    if (!response.data.success) {
-      if (response.data["error-codes"]) {
-        console.log("reCAPTCHA error codes:", response.data["error-codes"])
-      }
+    if (
+      !response.data.success ||
+      (response.data.score && response.data.score < 0.5)
+    ) {
+      const errorReason = response.data["error-codes"] || "low score"
+      console.log("reCAPTCHA verification failed:", errorReason)
       return res.status(401).send("Failed captcha verification")
     }
 
@@ -88,17 +90,16 @@ app.post("/contact", async (req, res) => {
     if (process.env.NODE_ENV === "dev") {
       console.log("Development mode - skipping email send")
       return res.status(200).send("Email would be sent in production.")
-    } else {
-      ses.sendEmail(params, function (err, sesResponse) {
-        if (err) {
-          console.error(err, err.stack)
-          return res.status(500).send("Error sending email")
-        } else {
-          console.log(sesResponse)
-          return res.status(200).send("Email sent successfully")
-        }
-      })
     }
+
+    ses.sendEmail(params, function (err, sesResponse) {
+      if (err) {
+        console.error("Error sending email:", err)
+        return res.status(500).send("Error sending email")
+      }
+      console.log("Email sent successfully:", sesResponse)
+      return res.status(200).send("Email sent successfully")
+    })
   } catch (error) {
     console.error(
       "Error during reCAPTCHA verification or email sending:",
