@@ -1,6 +1,5 @@
 const express = require("express")
-const request = require("request")
-const bodyParser = require("body-parser")
+const axios = require("axios")
 const compression = require("compression")
 const dotenv = require("dotenv")
 const path = require("path")
@@ -17,6 +16,8 @@ const stripePublishableKey =
   process.env.STRIPE_PUBLISHABLE_KEY || config.stripePublishableKey
 const recaptchaSecretKey =
   process.env.RECAPTCHA_SECRET_KEY || config.recaptchaSecretKey
+const recaptchaSiteKey =
+  process.env.RECAPTCHA_SITE_KEY || config.recaptchaSiteKey
 
 console.log(`Environment: ${environment}`)
 
@@ -33,7 +34,6 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use(bodyParser.urlencoded({ extended: true }))
 
 const ses = new AWS.SES({ region })
 
@@ -53,43 +53,54 @@ const buildParams = (data, contents) => {
 }
 
 // POSTs
-app.post("/contact", (req, res) => {
+app.post("/contact", async (req, res) => {
   const data = req.body
 
   if (!data["g-recaptcha-response"]) {
     return res.status(400).send("reCAPTCHA token is missing.")
   }
 
-  const verificationURL = `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${data["g-recaptcha-response"]}`
+  try {
+    const verificationURL = `https://www.google.com/recaptcha/api/siteverify`
+    const response = await axios.post(
+      verificationURL,
+      {},
+      {
+        params: {
+          secret: recaptchaSecretKey,
+          response: data["g-recaptcha-response"],
+        },
+      },
+    )
 
-  request(verificationURL, function (error, response, body) {
-    body = JSON.parse(body)
-
-    if (body.success !== undefined && !body.success) {
+    if (!response.data.success) {
       return res.status(401).send("Failed captcha verification")
     }
 
     const contents = `${data.message}\n\n${data.name}\n${data.email}\n`
-
-    var params = buildParams(data, contents)
-
-    console.log("params: ", params)
-    console.log("contents: ", contents)
+    const params = buildParams(data, contents)
 
     if (process.env.NODE_ENV === "dev") {
-      res.status(200).send("OK")
+      console.log("Development mode - skipping email send")
+      return res.status(200).send("Email would be sent in production.")
     } else {
-      ses.sendEmail(params, function (err, data) {
+      ses.sendEmail(params, function (err, sesResponse) {
         if (err) {
-          console.log(err, err.stack)
-          res.status(500).send("Something went wrong")
+          console.error(err, err.stack)
+          return res.status(500).send("Error sending email")
         } else {
-          console.log(data)
-          res.status(200).send("OK")
+          console.log(sesResponse)
+          return res.status(200).send("Email sent successfully")
         }
       })
     }
-  })
+  } catch (error) {
+    console.error(
+      "Error during reCAPTCHA verification or email sending:",
+      error,
+    )
+    return res.status(500).send("Server error")
+  }
 })
 
 app.post("/inquiry", (req, res) => {
@@ -144,7 +155,9 @@ app.get("/about", (req, res) => {
 })
 
 app.get("/contact", (req, res) => {
-  res.render("contact")
+  res.render("contact", {
+    recaptchaSiteKey,
+  })
 })
 
 app.get("/inquiry-confirmation", (req, res) => {
