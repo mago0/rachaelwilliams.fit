@@ -97,16 +97,20 @@ resource "aws_route53_record" "forms_CNAME" {
   records = ["cname.tally.so."]
 }
 
-resource "aws_route53_record" "blog_NS" {
+resource "aws_route53_record" "blog_CNAME" {
   zone_id = aws_route53_zone.rachaelwilliams.zone_id
   name    = "blog.rachaelwilliams.fit"
-  type    = "NS"
+  type    = "CNAME"
   ttl     = 300
-  records = [
-    "ns1.wordpress.com",
-    "ns2.wordpress.com",
-    "ns3.wordpress.com",
-  ]
+  records = ["ghs.google.com."]
+}
+
+resource "aws_route53_record" "blog_verification_CNAME" {
+  zone_id = aws_route53_zone.rachaelwilliams.zone_id
+  name    = "ssjijx33ejww.rachaelwilliams.fit"
+  type    = "CNAME"
+  ttl     = 300
+  records = ["gv-tz5zq2k7xn7jho.dv.googlehosted.com."]
 }
 
 output "route53_zone_id" {
