@@ -1,74 +1,91 @@
-# Rachael Williams Online Strength and Mobility
+# Rachael Williams Redirect Service
 
-Welcome to the repository for [rachaelwilliams.fit](https://rachaelwilliams.fit). This website is a platform for Rachael Williams, a professional personal trainer, to offer her strength and mobility training services to clients.
+Simple nginx-based redirect service for [rachaelwilliams.fit](https://rachaelwilliams.fit) that redirects all traffic to [rwpersonaltraining.com](https://rwpersonaltraining.com).
 
-This repository contains the source code for the website, along with setup files, scripts, tests, and other resources necessary to run, maintain, and scale the platform.
+## Overview
+
+This repository contains a lightweight Docker Compose setup that runs an nginx container to handle 301 redirects from the old domain to the new personal training website.
 
 ## Runtime Environment
 
-This application is written in Node.js and uses Express. Most of the web UI is written in plain HTML, CSS, and Javascript.
+- **Web Server**: nginx (alpine image)
+- **Container Platform**: Docker Compose
+- **SSL Termination**: Handled upstream by nginx proxy manager
 
-It's built on top of Docker and deployed to AWS using ECS/Fargate and an Application Load-balancer. We're using Terraform and AWS Copilot to manage the environment and deployments.
+## Files
 
-## Installing & Running the App
+- `docker-compose.yml` - Docker Compose configuration
+- `nginx.conf.template` - nginx configuration template for redirects
+- `.env.example` - Example environment configuration
+- `README.md` - This file
 
-Before you run the application, it is necessary to have [Docker](https://docs.docker.com/get-docker/) installed on your machine. After Docker is installed, follow these steps:
+## Running the Service
 
-1. Clone and navigate into this repository:
+### Prerequisites
 
-```
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose installed
+
+### Local Development/Testing
+
+1. Clone this repository:
+```bash
 git clone https://github.com/mago0/rachaelwilliams.fit.git
 cd rachaelwilliams.fit
 ```
 
-2. Build and run the Docker image via Docker Compose:
-
-```
-docker compose up
-# or
-npm run dev
+2. (Optional) Configure the port by creating a `.env` file:
+```bash
+cp .env.example .env
+# Edit .env to set NGINX_PORT if different from 80
 ```
 
-3. (optional) View the container logs.
-
-```
-docker compose logs -f
-# or
-npm run dev:logs
+3. Start the service:
+```bash
+docker-compose up -d
 ```
 
-4. Open up your from browser and navigate to `http://localhost:3000`.
-
-## Building and Deploying
-
-This needs AWS credentials for Terraform and Copilot. I recommend setting the following:
-
-```
-export AWS_PROFILE=
-export AWS_REGION=
+4. Test the redirect:
+```bash
+curl -I http://localhost/
+# Should return: HTTP/1.1 301 Moved Permanently
+# Location: https://rwpersonaltraining.com/
 ```
 
-### Terraform
-
-```
-cd terraform
-terraform init
-terraform apply
+5. Test the health check:
+```bash
+curl http://localhost/healthz
+# Should return: OK
 ```
 
-### AWS Copilot (manual)
+### Production Deployment
 
-Note: The `AmazonSESFullAccess` policy must be added to `webapp-prod-frontend-TaskRole` in order for the contact form to submit successfully.
+This service is designed to be deployed via Portainer by pointing it at this repository. The Docker Compose file will automatically:
 
-1. Deploy env prod: `copilot env deploy --name prod`
-2. Deploy the prod service: `COPILOT_ENVIRONMENT=prod copilot svc deploy --env prod`
+- Pull the `nginx:alpine` image
+- Mount the nginx configuration
+- Expose port 80 for the upstream proxy
+- Include health checks and restart policies
 
-### AWS Copilot (pipeline)
+## Configuration
 
-This deployment method is automated.
+### Environment Variables
 
-1. Push to git @main will deploy prod
+- `NGINX_PORT` - Port for nginx to listen on (default: 80)
 
-### Feedback
+### nginx Configuration
 
-I'm not sure why you'd be contributing to this but you can do so [here](https://github.com/mago0/rachaelwilliams.fit/issues).
+The nginx configuration provides:
+
+- **Health Check Endpoint**: `GET /healthz` returns `200 OK`
+- **Redirect**: All other requests redirect to `https://rwpersonaltraining.com` with 301 status
+- **URI Preservation**: Original request URI is preserved in the redirect
+- **Dynamic Port**: Port can be configured via `NGINX_PORT` environment variable
+
+## Monitoring
+
+The service includes a health check endpoint at `/healthz` that can be used by:
+- Docker health checks (configured in docker-compose.yml)
+- Load balancers
+- Monitoring systems
+
+Health checks run every 30 seconds and consider the service healthy when the `/healthz` endpoint responds successfully.
