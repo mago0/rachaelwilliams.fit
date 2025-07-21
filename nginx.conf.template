@@ -1,5 +1,5 @@
 server {
-    listen $NGINX_PORT;
+    listen 8123;
     server_name _;
     
     # Health check endpoint for container monitoring
