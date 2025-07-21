@@ -9,7 +9,7 @@ services:
     ports:
       - "${EXTERNAL_PORT}:8123"
     volumes:
-      - ./nginx.conf:/etc/nginx/conf.d/redirect.conf:ro
+      - ./nginx.redirect.conf:/etc/nginx/conf.d/redirect.conf:ro
     restart: unless-stopped
     networks:
       - app_net
